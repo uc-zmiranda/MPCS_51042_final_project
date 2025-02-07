@@ -3,6 +3,7 @@ This class creates the deck object that will be used when playing the game
 """
 
 import random as rd
+from card import Card 
 
 class Deck:
     def __init__(self):
@@ -38,12 +39,16 @@ class Deck:
         deck_cards = []
         
         # Setting card ranks
-        nums = ['A', 'J', 'Q', 'K']
-        nums.extend([str(x) for x in range(2,11)])
+        ranks = ['A', 'J', 'Q', 'K']
+        ranks.extend([str(x) for x in range(2,11)])
         
-        # Iterating through suits
-        for suit in ["\u2663", "\u2665", "\u2666", "\u2660"]:
-            for num in nums:
-                deck_cards.append((num,suit))
+        # making cards
+        for suit in ['diamond', 'spade', 'club', 'heart']:
+            for rank in ranks:
+                deck_cards.append(Card(rank, suit))
         
         return deck_cards
+    
+    
+    def __str__(self):
+        return str([str(card) for card in self.cards])
