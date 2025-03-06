@@ -42,7 +42,7 @@ class Card:
     
     @rank.setter
     def rank(self, value): 
-        
+
         if isinstance(value, str) is False:
             raise TypeError("Rank must be a string")
         
@@ -60,7 +60,6 @@ class Card:
     
     @suit.setter
     def suit(self, value):
-        
         
         if isinstance(value, str) is False:
             raise TypeError("Suit must be a string")
