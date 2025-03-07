@@ -17,7 +17,6 @@
 * Implement hand evaluation and ranking
     * create scoring algorithm to determine winner
 * Implement AI strategy support
-    * create strategies based on hand evaluation and number of chips AI player has.
 ### Week 6
 * Develop GUI in PyGame
     * Load assets

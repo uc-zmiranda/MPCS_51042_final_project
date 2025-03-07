@@ -99,10 +99,7 @@ class GameRound:
             
             # getting current max bet of active players
             current_bet = max([player.bet_amount for player in active_players])
-            
-            for p in active_players:
-                print(f"Player {p.id}: bet = {p.bet_amount}, action = {p.action_str}")
-            
+                        
             # getting bet end flags
             active_players_flag = not active_players
             match_bet_flag = all([(player.bet_amount == current_bet) for player in active_players])
@@ -137,8 +134,9 @@ class GameRound:
             # if a player cannot afford bank, make them fold
             if call_amt > player.bank:
                 player.action_str = 'fold'
-            
+                
             print('----------------')
+            
             # if player folds, make them inactive and tell table
             if player.action_str == 'fold': 
                 if player.id == 1:
