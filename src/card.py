@@ -1,6 +1,7 @@
 """
-This file defines the Card class that will represent playing card. 
+This file defines the Card class that will represent a playing card. 
 """
+
 class Card:
     def __init__(self, rank:str, suit:str):
         """
@@ -64,7 +65,9 @@ class Card:
         if isinstance(value, str) is False:
             raise TypeError("Suit must be a string")
         
-        if not self._get_suit_symbol(value):
+        try:
+            self._get_suit_symbol(value)
+        except:
             raise ValueError("Please provide a valid playing card suit")
         
         self._suit = value

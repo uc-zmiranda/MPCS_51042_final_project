@@ -1,14 +1,14 @@
 """
-This class defines the dealer, which will handle the game logic and
-logistics.
+This class defines the dealer, which will bridges the GUI and game logic in GameRound
 """
-from card import Card
-from deck import Deck
-from player import Player 
-from round import GameRound
-from hand import Hand
-from human_player import HumanPlayer
-from gui import TexasHoldemDisplay
+
+import time
+
+from .player import Player 
+from .round import GameRound
+from .hand import Hand
+from .gui import TexasHoldemDisplay
+
 
 
 import random as rd
@@ -16,6 +16,13 @@ import random as rd
 
 class Dealer:
     def __init__(self, players:list[Player]):
+        """
+        This class  defines the dealer class that bridges the game logic in
+        GameRound and visualization aspects in GUI.
+
+        Args:
+            players (list[Player]): List of players
+        """
         self.display = TexasHoldemDisplay()
         self._players = players
         self.phase = 'not_started'
@@ -25,19 +32,27 @@ class Dealer:
         
         
     def _set_up_game(self) -> None:
+        """
+        Pipeline to set up game
+        """
         self._seat_players()
         self._make_player_hands()
         self._make_players_active()
         
         
-    def _run_game(self) -> None: 
+    def _run_game(self) -> None:
+        """
+        This method manages the between round logic and bridges the visualization and game progression
+        """ 
         idx = 0
         game_flag = True
         small_blind = 2
         big_blind = 4
         
+        # setting game flag
         while game_flag:
             
+            # if only one player, they are winner
             if len(self._players) == 1:
                 print(f"Player {self._players[0].id} wins the game!")
                 break
@@ -48,18 +63,20 @@ class Dealer:
             big_blind_player = self._players[((idx+1) % len(self._players))]
  
             
-                        
             # assigning blinds
             self._assign_blinds(small_blind_player, big_blind_player)
             
+            # running game round
             round = GameRound(self._players, small_blind, big_blind)
             while self.phase != 'exit':
-                print(self.phase)
                 self._advance_phase(round)
                 if self.phase != 'round_start':
-                    self.display.run(self.game_state, True)
+                    self.display.run(self.game_state)
                 else: 
                     continue
+                
+            # sleeping so user can see result
+            time.sleep(5)
                             
               
             # resetting blinds
@@ -76,11 +93,17 @@ class Dealer:
             self._reset_action_str()
             self._elim_players(big_blind)
             self._reset_game_state()
-            
+            self._make_players_active()
             
             
     def _advance_phase(self, round:GameRound) -> None: 
-        
+        """
+        This method breaks a GameRound into its distinct steps
+        and returns a game state to be passed to TexasHoldEmDisplay
+
+        Args:
+            round (GameRound): round instance to play
+        """
         if self.phase == 'not_started':
             round.set_up_round()
             self.phase = 'round_start'
@@ -124,7 +147,6 @@ class Dealer:
         elif self.phase == 'exit':
             return
             
-
      
         
     def _seat_players(self) -> None:
@@ -151,6 +173,7 @@ class Dealer:
         for player in self._players:
             player._active = True
             
+            
     def _reset_game_state(self) -> None:
         """
         Helper method to clear game state
@@ -169,7 +192,9 @@ class Dealer:
             
         
     def _reset_action_str(self) -> None: 
-
+        """
+        Helper method to reset actions of each player
+        """
         for player in self._players:
             player._clear_action()
             
@@ -201,20 +226,6 @@ class Dealer:
 
         self._players = value
     
-
-    
-        
-def main():
-    #players = [HumanPlayer(100,2)]
-    players = [Player(1000,1, "rand"), HumanPlayer(1000,2), Player(1000,3), Player(1000,4, "soft")]
-    dealer = Dealer(players)
-    
-    
-    
-if __name__ == '__main__':
-    main()     
-        
-        
     
         
         

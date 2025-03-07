@@ -1,18 +1,21 @@
 """
-This class defines a player in Texas Code Em'
+This file defines the player class, which will represent the player of the
+game.
 """
 
 import random as rd
 
-from hand import Hand
+from .hand import Hand
 
 class Player:
     def __init__(self, starting_bank:int, id:int, strategy:str = 'strict'):
         """
-        This class defines a player in the game. It has a bank.
+        This class represents a player in the game.
 
         Args:
-            starting_bank (int): The starting bank of the player
+            starting_bank (int): starting bank amount
+            id (int): numeric ID
+            strategy (str, optional): string specifying strategy. Can be 'strict', 'soft', 'rand'. Defaults to 'strict'.
         """
         self._id = id
         self._bank = starting_bank
@@ -37,10 +40,10 @@ class Player:
         
     def bet(self, amount:int):
         """
-        method to make bet
+        method to execute a bet action
 
         Args:
-            amount (int): amount to bet and add to pot
+            amount (int): amount to bet
         """
         self.bank = self._bank - amount
         self.bet_amount = self.bet_amount + amount
@@ -48,7 +51,7 @@ class Player:
         
     def check(self, amount:int):
         """
-        method to check
+        method to execute a check action
 
         Args:
             amount (int): amount to check
@@ -60,7 +63,7 @@ class Player:
         
     def earn(self, amount:int): 
         """
-        amount that players earns if they win
+        method to add value to bank after a win
 
         Args:
             amount (int): amount won to add to bank
@@ -70,7 +73,8 @@ class Player:
         
     def get_action(self, min_bet:int) -> tuple:
         """
-        This method gets the computer action
+        This method gets the computer action based on the
+        initialized strategy.
 
         Returns:
             str: action to be taken by computer 'fold', 'raise', 'call/check'
@@ -103,7 +107,7 @@ class Player:
         Raises:
             ValueError: Error raised if arg is not a valid action
         """
-        if (isinstance(action_str, str) is True) and (action_str[0] in ['fold', 'bet', 'check']):
+        if (isinstance(action_str, str) is True) and (action_str in ['fold', 'bet', 'check']):
             self.action_str = action_str            
         else:
             raise ValueError('Please pass a valid action string, "bet", "raise", "fold".')
@@ -111,11 +115,15 @@ class Player:
         
     def _clear_action(self):
         """
-        Helper method to clear action
+        Helper method to clear action string
         """
         self.action_str = None
         
+        
     def _clear_bet_amount(self): 
+        """
+        Helper method to clear bet amount
+        """
         self.bet_amount = 0
         
         
@@ -123,7 +131,6 @@ class Player:
     def id(self): 
         return self._id
     
-        
     @id.setter
     def id(self, value):
         if isinstance(value, int) is False:

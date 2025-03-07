@@ -1,10 +1,24 @@
-from player import Player
+"""
+This file defines a sub-class to the player class that will be used by HumanPlayers 
+"""
 
-
+from .player import Player
 
 class HumanPlayer(Player):
-    
-    def get_action(self, bet_min:int, call_amt:int)->int:
+    """
+    A subclass of player that adds functionality for user input. 
+    """
+    def get_action(self, bet_min:int, call_amt:int)-> int:
+        """
+        Method to get user input for action.
+
+        Args:
+            bet_min (int): minimum bet amount to pass to user for decision making
+            call_amt (int): call amount to pass to user for decision making
+
+        Returns:
+            int: player decision amount
+        """
         action_flag = True
         while action_flag: 
             # getting action
@@ -56,7 +70,15 @@ class HumanPlayer(Player):
 
                         
                     
-                    
     @staticmethod
-    def _clean_input(action_str:str):
+    def _clean_input(action_str:str) -> str:
+        """
+        Helper method to clean user input
+
+        Args:
+            action_str (str): action str to clean 
+
+        Returns:
+            str: cleaned action str
+        """
         return action_str.strip().lower()

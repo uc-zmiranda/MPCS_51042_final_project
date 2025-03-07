@@ -1,9 +1,9 @@
 """
-This class creates the deck object that will be used when playing the game
+This file defines the deck object that will be used when playing the game
 """
 
 import random as rd
-from card import Card 
+from .card import Card
 
 class Deck:
     def __init__(self):

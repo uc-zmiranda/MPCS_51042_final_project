@@ -1,4 +1,8 @@
-from card import Card
+"""
+This file defines the Hand class that will represent a players hand
+"""
+
+from .card import Card
 
 class Hand:
     def __init__(self, cards:list[Card]): 
@@ -8,7 +12,7 @@ class Hand:
         is holding
 
         Args:
-            cards (list[Card]): _description_
+            cards (list[Card]): list of card type objects
         """
         self._cards = cards
         self._type_int = None
@@ -25,6 +29,9 @@ class Hand:
         
         
     def print_hand(self) -> None: 
+        """
+        Helper method to print cards in hand
+        """
         print([str(card) for card in self._cards])
                 
 
